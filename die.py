@@ -2,8 +2,8 @@ import random
 
 
 class Die:
-    def __init__(self):
-        self.face = 5
+    def __init__(self, value=5):
+        self.face = value
 
     def get_face(self):
         return self.face
