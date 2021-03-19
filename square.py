@@ -157,16 +157,3 @@ class Big:
             return "$"
         elif self.score == 100:
             return "$$"
-
-
-dice = [Die(3), Die(3), Die(3), Die(3), Die(3)]
-
-big = Big()
-for die in dice:
-    die.throw()
-    print("---")
-    print(die)
-    print("\n")
-
-big.calculate_score(dice)
-print(big)
