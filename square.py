@@ -8,7 +8,7 @@ class Square:
         self.score = 0
         self.selected = False
 
-    def calculate_score(self, dice):
+    def calculate_score(self, dice,first=False):
         if not self.selected:
             for die in dice:
                 if die.get_face() == self.value:

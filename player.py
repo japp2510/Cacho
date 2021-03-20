@@ -1,3 +1,4 @@
+from die import Die
 from square import Square
 from square import Stair
 from square import Full
@@ -13,3 +14,59 @@ class Player:
     def set_board(self):
         return [[Square(1), Stair(), Square(4)], [Square(2), Full(), Square(5)], [Square(3), Poker(), Square(6)],
                 [Big(), Big()]]
+
+    def finish(self):
+        return
+
+    def __repr__(self):
+        repr = "\n\n{}\n".format(self.name)
+        score = 0
+        for row in self.board:
+            for box in row:
+                score += box.get_score()
+                repr += str(box) + " |"
+            repr += "\n"
+        repr += "Score : {}\n".format(score)
+        return repr
+
+    def get_square(self, choices_board):
+        square = None
+        while square is None:
+            print("Select which square in board you want to select : ")
+            print(choices_board)
+            square = input()
+            for i, lst in enumerate(choices_board):
+                for j, color in enumerate(lst):
+                    if color == square:
+                        if self.board[i][j].selected:
+                            print("Square was already selected please choose another one")
+                        else:
+                            square = self.board[i][j]
+        return square
+
+    def play(self, dice):
+        choices_board = [["1", "S", "4"], ["2", "F", "5"], ["3", "P", "6"], ["B", "G"]]
+        turn = 1
+        dice_throw = "12345"
+        while turn < 3:
+            for index in dice_throw:
+                i = int(index) - 1
+                dice[i].throw()
+            print("Turn {}:".format(turn))
+            print(dice)
+            print("Introduce the dices you wanna throw (exp : 12345 or 245) 0 if you wanna score dice: \n")
+            dice_throw = input("")
+            if dice_throw == "0":
+                break
+            turn += 1
+        print(dice)
+        square = self.get_square(choices_board)
+        square.calculate_score(dice, turn == 1)
+        print("Turn ended!")
+
+
+japp = Player("Juan Ariel")
+dice = [Die(1), Die(2), Die(3), Die(4), Die(5)]
+while True:
+    print(japp)
+    japp.play(dice)

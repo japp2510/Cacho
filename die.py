@@ -12,12 +12,4 @@ class Die:
         self.face = random.randint(1, 6)
 
     def __repr__(self):
-        representation = {
-            1: """   \n * \n   """,
-            2: """  *\n   \n*  """,
-            3: """  *\n * \n*  """,
-            4: """* *\n   \n* *""",
-            5: """* *\n * \n* *""",
-            6: """* *\n* *\n* *"""
-        }
-        return representation[self.face]
+        return str(self.face)
