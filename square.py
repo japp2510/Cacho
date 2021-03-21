@@ -8,7 +8,7 @@ class Square:
         self.score = 0
         self.selected = False
 
-    def calculate_score(self, dice,first=False):
+    def calculate_score(self, dice, first=False):
         if not self.selected:
             for die in dice:
                 if die.get_face() == self.value:
@@ -20,7 +20,7 @@ class Square:
         return self.score
 
     def __repr__(self):
-        return str(self.score)
+        return "X" if self.selected and self.score == 0 else str(self.score)
 
 
 class Stair:
@@ -44,12 +44,14 @@ class Stair:
         return self.score
 
     def __repr__(self):
-        if self.score == 0:
+        if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 20:
             return "()"
         elif self.score == 25:
             return "$"
+        else:
+            return "X"
 
 
 class Full:
@@ -81,12 +83,14 @@ class Full:
         return self.score
 
     def __repr__(self):
-        if self.score == 0:
+        if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 30:
             return "()"
         elif self.score == 35:
             return "$"
+        else:
+            return "X"
 
 
 class Poker:
@@ -118,12 +122,14 @@ class Poker:
         return self.score
 
     def __repr__(self):
-        if self.score == 0:
+        if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 40:
             return "()"
         elif self.score == 45:
             return "$"
+        else:
+            return "X"
 
 
 class Big:
@@ -151,9 +157,11 @@ class Big:
         return self.score
 
     def __repr__(self):
-        if self.score == 0:
+        if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 50:
             return "$"
         elif self.score == 100:
             return "$$"
+        else:
+            return "X"

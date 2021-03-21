@@ -10,13 +10,15 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.board = self.set_board()
+        self.max_turn = 11
+        self.play_turn = 0
 
     def set_board(self):
         return [[Square(1), Stair(), Square(4)], [Square(2), Full(), Square(5)], [Square(3), Poker(), Square(6)],
                 [Big(), Big()]]
 
-    def finish(self):
-        return
+    def can_play(self):
+        return self.play_turn < self.max_turn
 
     def __repr__(self):
         repr = "\n\n{}\n".format(self.name)
@@ -30,8 +32,8 @@ class Player:
         return repr
 
     def get_square(self, choices_board):
-        square = None
-        while square is None:
+        box = None
+        while box is None:
             print("Select which square in board you want to select : ")
             print(choices_board)
             square = input()
@@ -41,32 +43,27 @@ class Player:
                         if self.board[i][j].selected:
                             print("Square was already selected please choose another one")
                         else:
-                            square = self.board[i][j]
-        return square
+                            box = self.board[i][j]
+        return box
 
     def play(self, dice):
         choices_board = [["1", "S", "4"], ["2", "F", "5"], ["3", "P", "6"], ["B", "G"]]
-        turn = 1
+        turn = 0
         dice_throw = "12345"
         while turn < 3:
             for index in dice_throw:
                 i = int(index) - 1
                 dice[i].throw()
-            print("Turn {}:".format(turn))
+            print("Turn {}:".format(turn+1))
             print(dice)
-            print("Introduce the dices you wanna throw (exp : 12345 or 245) 0 if you wanna score dice: \n")
-            dice_throw = input("")
-            if dice_throw == "0":
-                break
+            if turn != 2:
+                print("Introduce the dices you wanna throw (exp : 12345 or 245) 0 if you wanna score dice: \n")
+                dice_throw = input("")
+                if dice_throw == "0":
+                    break
             turn += 1
-        print(dice)
         square = self.get_square(choices_board)
-        square.calculate_score(dice, turn == 1)
+        square.calculate_score(dice, turn == 0)
+        self. play_turn += 1
         print("Turn ended!")
 
-
-japp = Player("Juan Ariel")
-dice = [Die(1), Die(2), Die(3), Die(4), Die(5)]
-while True:
-    print(japp)
-    japp.play(dice)
