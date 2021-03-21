@@ -12,6 +12,7 @@ class Player:
         self.board = self.set_board()
         self.max_turn = 11
         self.play_turn = 0
+        self.score = 0
 
     def set_board(self):
         return [[Square(1), Stair(), Square(4)], [Square(2), Full(), Square(5)], [Square(3), Poker(), Square(6)],
@@ -20,15 +21,22 @@ class Player:
     def can_play(self):
         return self.play_turn < self.max_turn
 
-    def __repr__(self):
-        repr = "\n\n{}\n".format(self.name)
-        score = 0
+    def get_score(self):
+        self.score = 0
         for row in self.board:
             for box in row:
-                score += box.get_score()
+                self.score += box.get_score()
+        return self.score
+
+    def __repr__(self):
+        repr = "\n\n{}\n".format(self.name)
+        self.score = 0
+        for row in self.board:
+            for box in row:
+                self.score += box.get_score()
                 repr += str(box) + " |"
             repr += "\n"
-        repr += "Score : {}\n".format(score)
+        repr += "Score : {}\n".format(self.score)
         return repr
 
     def get_square(self, choices_board):
@@ -54,7 +62,7 @@ class Player:
             for index in dice_throw:
                 i = int(index) - 1
                 dice[i].throw()
-            print("Turn {}:".format(turn+1))
+            print("Turn {}:".format(turn + 1))
             print(dice)
             if turn != 2:
                 print("Introduce the dices you wanna throw (exp : 12345 or 245) 0 if you wanna score dice: \n")
@@ -64,6 +72,8 @@ class Player:
             turn += 1
         square = self.get_square(choices_board)
         square.calculate_score(dice, turn == 0)
-        self. play_turn += 1
+        self.play_turn += 1
         print("Turn ended!")
 
+    def __repr__(self):
+        return self.name
