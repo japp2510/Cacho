@@ -1,6 +1,3 @@
-from die import Die
-
-
 class Square:
     def __init__(self, value):
         self.value = value
@@ -23,7 +20,7 @@ class Square:
         return "X" if self.selected and self.score == 0 else str(self.score)
 
 
-class Stair:
+class Stair(Square):
     def __init__(self):
         self.score = 0
         self.selected = False
@@ -40,21 +37,18 @@ class Stair:
             self.score = (20 + (5 if first else 0)) if all(condition) else 0
             self.selected = True
 
-    def get_score(self):
-        return self.score
-
     def __repr__(self):
         if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 20:
-            return "()"
+            return "Ø"
         elif self.score == 25:
             return "$"
         else:
             return "X"
 
 
-class Full:
+class Full(Square):
     def __init__(self):
         self.score = 0
         self.selected = False
@@ -79,21 +73,18 @@ class Full:
             self.score = (30 + (5 if first else 0)) if condition else 0
             self.selected = True
 
-    def get_score(self):
-        return self.score
-
     def __repr__(self):
         if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 30:
-            return "()"
+            return "Ø"
         elif self.score == 35:
             return "$"
         else:
             return "X"
 
 
-class Poker:
+class Poker(Square):
     def __init__(self):
         self.score = 0
         self.selected = False
@@ -118,21 +109,18 @@ class Poker:
             self.score = (40 + (5 if first else 0)) if condition else 0
             self.selected = True
 
-    def get_score(self):
-        return self.score
-
     def __repr__(self):
         if self.score == 0 and not self.selected:
             return str(0)
         elif self.score == 40:
-            return "()"
+            return "Ø"
         elif self.score == 45:
             return "$"
         else:
             return "X"
 
 
-class Big:
+class Big(Square):
     def __init__(self):
         self.score = 0
         self.selected = False
@@ -152,9 +140,6 @@ class Big:
             condition = self.is_big()
             self.score = (50 + (50 if first else 0)) if condition else 0
             self.selected = True
-
-    def get_score(self):
-        return self.score
 
     def __repr__(self):
         if self.score == 0 and not self.selected:
